@@ -1,8 +1,9 @@
 
 import urllib.parse as up
-import psycopg2, psycopg2.extras
+from app import db
+import psycopg2, psycopg.extras
 up.uses_netloc.append("postgres")
-url = up.urlparse("postgres://ecelilmw:Eb9eNRBLa1rQeA1O6eSAZjRC9BUJwDBm@tiny.db.elephantsql.com/ecelilmw")
+url = up.urlparse("postgresql://ecelilmw:Eb9eNRBLa1rQeA1O6eSAZjRC9BUJwDBm@tiny.db.elephantsql.com/ecelilmw")
 CREATE_SCRIPT = '''CREATE TABLE IF NOT EXISTS USERLIST (
                      ID INT PRIMARY KEY,
                      USERNAME VARCHAR(50) NOT NULL,
@@ -24,6 +25,22 @@ CREATE_SCRIPT = '''CREATE TABLE IF NOT EXISTS USERLIST (
 
 # conn.close()
 '''
+
+
+
+class user(db.Model):
+     __tablename__ = 'userslist'
+     Id=db.Column('user_id',db.Integer, primary_key=True)
+     username = db.Column('username',db.String(50))
+     password = db.Column('password',db.String(50))
+
+     def __init__(self,username,password):
+          self.username=username
+          self.password=password
+
+     def __repr__(self):
+        return '<id {}>'.format(self.Id)
+
 
 #APPEND DATA TO USERLIST 
 def add_user(username,password):
