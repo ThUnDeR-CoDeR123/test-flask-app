@@ -1,1 +1,1 @@
-encode
+UPLOAD_FOLDER = './db'
