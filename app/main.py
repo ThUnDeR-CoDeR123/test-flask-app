@@ -1,15 +1,15 @@
 from flask import Flask
 from blueprints.user import blueprint_signup,blueprint_login,blueprint_getuserlst
 from db.database import db
-from os import environ
+from admin.setup import SECRET_KEY, SQLALCHEMY_DATABASE_URI
 
 
 app=Flask(__name__)
 UPLOAD_FOLDER = './db'
 ALLOWED_EXTENSIONS = {'pdf'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['SECRET_KEY'] = environ.get('SECRET_KEY')
-app.config['SQLALCHEMY_DATABASE_URI']=environ.get('SQLALCHEMY_DATABASE_URI')
+app.config['SECRET_KEY'] = SECRET_KEY
+app.config['SQLALCHEMY_DATABASE_URI']=SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATINOS'] = True
 db.init_app(app)
 
