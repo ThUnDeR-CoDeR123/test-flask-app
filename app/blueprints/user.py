@@ -52,11 +52,11 @@ def signup():
 @token_required
 def get_user():
     data=User.query.all()
-    result=[{"ID":item.Id,"username" : item.username, "password" : item.password} for item in data]
+    result=[{"ID":item.Id,"username" : item.username,"password":item.password} for item in data]
     return result
 
 
-@blueprint_login.route('/login',methods=['POST'])
+@blueprint_login.route('/login',methods=['POST','GET','PUT'])
 def login():
     data=request.get_json()
     db_statement=select(User.password).where(User.username==data["username"])
@@ -68,7 +68,7 @@ def login():
             'password':data['password']
             },
         serect_keys)
-            return token
+            return jsonify(token=token)
         else:
             return 'Invalid Password or Password'
     except Exception as e:
